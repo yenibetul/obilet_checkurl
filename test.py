@@ -6,7 +6,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-slack_webhook_url = "https://hooks.slack.com/services/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"
+slack_webhook_url = "https://hooks.slack.com/services/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"
+
 
 
 service = Service('path_to_chromedriver')  # ChromeDriver'ın yolunu belirtin
