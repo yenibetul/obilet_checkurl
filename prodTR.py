@@ -2,18 +2,26 @@ import json
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-slack_webhook_url ="https://hooks.slack.com/services/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"
+slack_webhook_url ="https://hooks.slack.com/services/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"
 json_filenames = ["prodTR.json", "preprodEng.json"]
 service = Service('path_to_chromedriver')
 driver = webdriver.Chrome(service=service)
+def create_session_with_header(header_name, header_value):
+    session = requests.Session()
+    session.headers[header_name] = header_name
+    session.headers[header_value] = header_value
+    return session
 
 def test_url_check(url):
-    response = requests.get(url)
+    session = create_session_with_header('bypass-rate-limit', '126371a4-bf11-4225-80ea-26c173c32571')
+    response = session.get(url)
     status_code = response.status_code
+
     if status_code >= 400 and status_code < 600:
         print(f"URL kontrolü başarısız: {url} - HTTP durum kodu: {status_code}")
         send_slack_notification(url, status_code)
